@@ -1,7 +1,7 @@
 % DtN-TDG solver for Helmholtz equation on periodic grating 
 % Convergence test
 
-clearvars; addpath quadtriangle\
+close all; addpath quadtriangle\; addpath src\
 
 %-----------------------------------
 %Parameters definition
@@ -28,6 +28,8 @@ end
 %Select domain - only double and triple rectangle available
 domain = 'triple_rectangle';
 
+disp(['Theta-convergence test on the domain ', domain, ' with k=', num2str(param.K)])
+
 %-----------------------------------
 %Cycle on theta
 %-----------------------------------
@@ -51,12 +53,11 @@ for theta=theta_0-1e-4:1e-5:theta_0+1e-4 %cycle on theta
     %Error computation
     [err2] = SolErr(mesh,param,u,phi,grad_phi,uex,uexdx,uexdy);
     L2Error(v) = err2;
-    CondNum(v) = condest(A);
+    disp([ 'Computed error for theta=', num2str(param.theta) ])
 
     v=v+1;
 end
 
-%%
 
 %-----------------------------------
 %Convergence plot
@@ -73,21 +74,3 @@ a = get(gca,'YTickLabel');
 set(gca,'YTickLabel',a,'fontsize',14,'TickLabelInterpreter', 'latex')
 xlabel('Incident angle','FontSize',18, 'Interpreter','latex')
 ylabel('Error','FontSize',18, 'Interpreter','latex')
-
-
-%%
-%-----------------------------------
-%Conditioning number
-%-----------------------------------
-figure()
-semilogy(theta_0-1e-4:1e-5:theta_0+1e-4,CondNum,'*-','LineWidth',1.2); grid
-xlim([theta_0-1.1e-4 theta_0+1.1e-4])
-LL = legend('cond(A)','FontSize', 14);
-set(LL, 'Interpreter', 'latex');
-a = get(gca,'XTickLabel');
-set(gca,'XTickLabel',a,'fontsize',14,'TickLabelInterpreter', 'latex')
-xticks([theta_0-1e-4, theta_0, theta_0+1e-4])
-a = get(gca,'YTickLabel');
-set(gca,'YTickLabel',a,'fontsize',14,'TickLabelInterpreter', 'latex')
-xlabel('Incident angle','FontSize',18, 'Interpreter','latex')
-ylabel('Conditioning number','FontSize',18, 'Interpreter','latex')

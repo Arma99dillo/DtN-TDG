@@ -1,27 +1,32 @@
 %DtN-TDG solver for Helmholtz equation on periodic grating
-clearvars;
+
+close all; addpath src\
 
 %-----------------------------------
 %Parameters definition
 %-----------------------------------
 %Problem parameters
-param.K=20; %wavenumber
-param.theta=-pi/3; %incident angle
+param.K=5; %wavenumber
+param.theta=-pi/4; %incident angle
 param.alp=param.K*cos(param.theta); %quasi-periodicity parameter
 
 %Discretization parameters
-param.h=0.5; %mesh width
+param.h=1.5; %mesh width
 param.alpha=1/2; param.beta=1/2; param.delta=1/2; %TDG flux coefficients 
-param.M=50; %number of Fourier modes
-
+param.M=20; %number of Fourier modes
 
 %-----------------------------------
 %Mesh definition
 %-----------------------------------
 %Select domain
-domain = 'u_shape';
+domain = 'double_rectangle';
 [mesh,param] = GenerateMesh(param,domain);
 
+disp(['DtN-TDG approximation on the domain ', domain, ' with k=', num2str(param.K)])
+
+if param.K.*param.L/2 > param.M
+    warning('The value of M is too small, consider increasing for better stability')
+end
 
 %-----------------------------------
 %Numerical solution with DtN-TDG 
@@ -39,6 +44,7 @@ phi = @(x1,x2,d,k) exp(1i*k.*(x1.*d(1)+x2.*d(2)));
 A = MatrixDtNTDG(mesh,param); %system matrix
 b = rhsDtNTDG(mesh,param); %system rhs
 u=A\b; %solve the system
+disp('Solved linear system')
 
 
 %-----------------------------------

@@ -1,14 +1,14 @@
 % DtN-TDG solver for Helmholtz equation on periodic grating 
 % Relative error convergence test
 
-clearvars; addpath quadtriangle\
+close all; addpath quadtriangle\; addpath src\
 
 %-----------------------------------
 %Parameters definition
 %-----------------------------------
 %Problem parameters
-param.K=5; %wavenumber
-param.theta=-pi/4; %incident angle
+param.K=4; %wavenumber
+param.theta=-pi/3; %incident angle
 param.alp=param.K*cos(param.theta); %quasi-periodicity parameter
 
 %Discretization parameters
@@ -21,13 +21,20 @@ nd_raff=20; %number of directions for the refined solution
 %-----------------------------------
 %Mesh definition
 %-----------------------------------
-domain = 'dir_square'; %select domain
+domain = 'u_shape'; %select domain
 [mesh,param] = GenerateMesh(param,domain); %generate mesh 
 
-%%
+disp(['DtN-TDG convergence test on the domain ', domain, ' with k=', num2str(param.K)])
+
+if param.K.*param.L/2 > param.M
+    warning('The value of M is too small, consider increasing for better stability')
+end
+
 %-----------------------------------
 %Refined solution for relative error
 %-----------------------------------
+disp(['Started computing refined solution (p=', num2str(nd_raff), ')' ])
+
 %basis functions and derivatives
 phi = @(x1,x2,d,k) exp(1i*k.*(x1.*d(1)+x2.*d(2)));
 grad_phi = @(x1,x2,d,k) 1i*k.*d.*exp(1i*k.*(x1.*d(1)+x2.*d(2)));
@@ -46,7 +53,7 @@ A_raff = MatrixDtNTDG(mesh,param_raff);
 b_raff = rhsDtNTDG(mesh,param_raff);
 u_raff=A_raff\b_raff;
 
-%%
+
 %-----------------------------------
 %Cycle on number of directions
 %-----------------------------------
@@ -69,17 +76,18 @@ for nd=ni:nf %cycle on number of PW directions
     [err2,err1] = SolErrRel(mesh,param,u,param_raff,u_raff,phi,grad_phi);
     L2Error(v) = err2;
     H1Error(v) = err1;
+    disp([ 'Computed error for p=', num2str(param.nd) ])
 
     v=v+1;
 end
 
-%%
+
 %-----------------------------------
 %Convergence plot
 %-----------------------------------
 PlotConvergence(ni,nf,L2Error,H1Error);
 
-%%
+
 %-----------------------------------
 %Solution and scatterer plot
 %-----------------------------------

@@ -1,6 +1,9 @@
 function A = MatrixDtNTDG(mesh,param)
 %define the system matrix for the DTN-TDG method
 
+tic()
+disp('Started linear system assembly')
+
 %get the parameters
 t=mesh.t; p=mesh.p; B=mesh.B; K=param.K; LI=mesh.LI; alpha=param.alpha; 
 beta=param.beta; delta=param.delta; epsilon=param.epsilon; eps_p=param.epsilon(1);
@@ -24,29 +27,22 @@ for T = 1:m
 
     k=K*sqrt(epsilon(E(T))); %wavenumber inside the element
 
-    %identify the internal elements 
-    %include the left and right boundary between the internal elements
-    nI=0; L_I=zeros(3,2);
-    for u=1:3
-        if IsInt(T,u,B,t,p,S) %check if it's an internal element
-            nI=nI+1;
-            L_I(nI,:)=[t(T,u), t(T,u+1)];
-        end
-    end
-    
-    %cycle on PW directions: this way I include all basis functions
+    %identify the internal edges
+    %include the left and right boundary between the internal edges
     A_aux =zeros(nd,nd); %auxiliary matrix
-    for l = 1:nd
-        for j= 1:nd
-            dl = d(:,l); dj = d(:,j); diff=dl-dj; %PW directions and difference
-            %integral on the internal edges of the element T computed exactly
-            for s=1:nI %cycle only on internal elements
-                p1=p(L_I(s,1),:)'; p2=p(L_I(s,2),:)'; %endpoints
-                n = (R*(p2-p1))/norm(p2-p1); %outward normal
-                A_aux(j,l) = A_aux(j,l) + 1i*k.*(-(1/2).*(dot(dj,n)+dot(dl,n))-beta.*dot(dj,n).*dot(dl,n)-alpha).*phi_int(diff,p1,p2,k);
-            end         
+    for u=1:3
+        if IsInt(T,u,B,t,p,S) %check if it's an internal edge
+            %cycle on PW directions: this way I include all basis functions
+            for l = 1:nd
+                for j= 1:nd
+                    dl = d(:,l); dj = d(:,j); diff=dl-dj; %PW directions and difference
+                    p1=p(t(T,u),:)'; p2=p(t(T,u+1),:)'; %endpoints
+                    n = (R*(p2-p1))/norm(p2-p1); %outward normal
+                    A_aux(j,l) = A_aux(j,l) + 1i*k.*(-(1/2).*(dot(dj,n)+dot(dl,n))-beta.*dot(dj,n).*dot(dl,n)-alpha).*phi_int(diff,p1,p2,k);
+                end
+            end
         end
-    end
+    end    
     A((T-1)*nd+1:T*nd,(T-1)*nd+1:T*nd)=A((T-1)*nd+1:T*nd,(T-1)*nd+1:T*nd)+A_aux; %update matrix entries
 end
 

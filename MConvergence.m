@@ -1,7 +1,7 @@
 % DtN-TDG solver for Helmholtz equation on periodic grating
 % M-convergence error test
 
-clearvars; addpath quadtriangle\
+close all; addpath quadtriangle\; addpath src\
 
 %-----------------------------------
 %Parameters definition
@@ -32,7 +32,7 @@ for l=1:param.nd
     param.d(:,l)=[cos((2*pi*l)/param.nd); sin((2*pi*l)/param.nd)];
 end
 
-%%
+
 %-----------------------------------
 %Convergence test
 %-----------------------------------
@@ -46,9 +46,13 @@ for j=1:size(KK,2)
     param.K=KK(j);
     param.alp=param.K*cos(param.theta); %quasi-periodicity parameter
 
+    disp(['M-convergence test on the domain ', domain, ' with k=', num2str(param.K)])
+
     %Refined solution for relative error
     param_raff=param;
     param_raff.M=M_raff;
+
+    disp(['Started computing refined solution (M=', num2str(M_raff), ')' ])
 
     %matrix, rhs and solution for the refined parameters
     A_raff = MatrixDtNTDG(mesh,param_raff);
@@ -69,13 +73,14 @@ for j=1:size(KK,2)
         %Error computation
         [err2,~] = SolErrRel(mesh,param,u,param_raff,u_raff,phi,grad_phi);
         L2Error(v,j) = err2;
+        disp([ 'Computed error for M=', num2str(param.M) ])
 
         v=v+1;
     end
 
 end
 
-%%
+
 %-----------------------------------
 %Convergence plot
 %-----------------------------------

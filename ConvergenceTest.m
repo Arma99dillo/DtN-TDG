@@ -1,7 +1,7 @@
 % DtN-TDG solver for Helmholtz equation on periodic grating 
 % Convergence test
 
-clearvars; addpath quadtriangle\
+close all; addpath quadtriangle\; addpath src\
 
 %-----------------------------------
 %Parameters definition
@@ -14,7 +14,7 @@ param.alp=param.K*cos(param.theta); %quasi-periodicity parameter
 %Discretization parameters
 param.h=1.5; %mesh width
 param.alpha=1/2; param.beta=1/2; param.delta=1/2; %TDG flux coefficients 
-param.M=100; %number of Fourier modes
+param.M=20; %number of Fourier modes
 
 
 %-----------------------------------
@@ -25,6 +25,11 @@ domain = 'double_rectangle';
 %generate mesh and compute exact solution
 [mesh,param,uex,uexdx,uexdy] = GenerateMeshSol(param,domain);
 
+disp(['DtN-TDG convergence test on the domain ', domain, ' with k=', num2str(param.K)])
+
+if param.K.*param.L/2 > param.M
+    warning('The value of M is too small, consider increasing for better stability')
+end
 
 %-----------------------------------
 %Cycle on number of directions
@@ -33,7 +38,7 @@ domain = 'double_rectangle';
 phi = @(x1,x2,d,k) exp(1i*k.*(x1.*d(1)+x2.*d(2)));
 grad_phi = @(x1,x2,d,k) 1i*k.*d.*exp(1i*k.*(x1.*d(1)+x2.*d(2)));
 
-ni=30; nf=30; %min and max value
+ni=3; nf=30; %min and max value
 L2Error=zeros(nf-ni+1,1); H1Error=zeros(nf-ni+1,1); v=1; %error vectors
 for nd=ni:nf %cycle on number of PW directions
 
@@ -52,18 +57,19 @@ for nd=ni:nf %cycle on number of PW directions
     [err2,err1] = SolErr(mesh,param,u,phi,grad_phi,uex,uexdx,uexdy);
     L2Error(v) = err2;
     H1Error(v) = err1;
+    disp([ 'Computed error for p=', num2str(param.nd) ])
+
 
     v=v+1;
 end
 
-%%
 
 %-----------------------------------
 %Convergence plot
 %-----------------------------------
 PlotConvergence(ni,nf,L2Error,H1Error);
 
-%%
+
 %-----------------------------------
 %Solution and error plot
 %-----------------------------------

@@ -33,5 +33,7 @@ for F=1:size(LU,1) %cycle on the upper boundary
     end
 end
 
+disp('Ended linear system assembly')
+toc()
 
 return
