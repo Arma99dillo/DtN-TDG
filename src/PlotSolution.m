@@ -34,15 +34,6 @@ for T=1:size(t1,1)
         end
     end
     
-    %determine colorbar limits from data
-    if T==1
-        minColorLimit1 = min(min(real(u_app))); 
-        maxColorLimit1 = max(max(abs(u_app)));
-    else
-        minColorLimit1 = min(min(real(u_app)),minColorLimit1);   
-        maxColorLimit1 = max(max(abs(u_app)),maxColorLimit1);
-    end
-    
     %plot real part and absolute value
     subplot(1,2,1)
     trisurf(t,p(:,1),p(:,2),real(u_app)); 
