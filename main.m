@@ -1,13 +1,13 @@
 %DtN-TDG solver for Helmholtz equation on periodic grating
 
-close all; addpath src\
+close all; addpath src
 
 %-----------------------------------
 %Parameters definition
 %-----------------------------------
 %Problem parameters
 param.K=5; %wavenumber
-param.theta=-pi/4; %incident angle
+param.theta=-pi/3; %incident angle
 param.alp=param.K*cos(param.theta); %quasi-periodicity parameter
 
 %Discretization parameters
@@ -22,12 +22,6 @@ param.M=20; %number of Fourier modes
 domain = 'double_rectangle';
 [mesh,param] = GenerateMesh(param,domain);
 
-disp(['DtN-TDG approximation on the domain ', domain, ' with k=', num2str(param.K)])
-
-if param.K.*param.L/2 > param.M
-    warning('The value of M is too small, consider increasing for better stability')
-end
-
 %-----------------------------------
 %Numerical solution with DtN-TDG 
 %-----------------------------------
@@ -36,6 +30,14 @@ param.nd=24; %number of plane wave directions
 param.d=zeros(2,param.nd); 
 for l=1:param.nd
     param.d(:,l)=[cos((2*pi*l)/param.nd); sin((2*pi*l)/param.nd)];
+end
+
+disp(['DtN-TDG approximation on the domain ', domain, ' with k=', num2str(param.K),...
+    ', p=', num2str(param.nd), ', h=', num2str(param.h),...
+    ', with ', num2str(param.nd.*size(mesh.t,1)), ' basis functions' ])
+
+if param.K.*param.L/2 > param.M
+    warning('The value of M is too small, consider increasing for better stability')
 end
 
 %basis functions

@@ -1,7 +1,7 @@
 % DtN-TDG solver for Helmholtz equation on periodic grating 
 % Convergence test
 
-close all; addpath quadtriangle\; addpath src\
+close all; addpath quadtriangle; addpath src
 
 %-----------------------------------
 %Parameters definition
@@ -28,7 +28,9 @@ end
 %Select domain - only double and triple rectangle available
 domain = 'triple_rectangle';
 
-disp(['Theta-convergence test on the domain ', domain, ' with k=', num2str(param.K)])
+disp(['Theta-convergence test on the domain ', domain, ' with k=', num2str(param.K)...
+    ', p=', num2str(param.nd), ', h=', num2str(param.h),...
+    ', with ', num2str(param.nd.*size(mesh.t,1)), ' basis functions' ])
 
 %-----------------------------------
 %Cycle on theta
@@ -53,7 +55,7 @@ for theta=theta_0-1e-4:1e-5:theta_0+1e-4 %cycle on theta
     %Error computation
     [err2] = SolErr(mesh,param,u,phi,grad_phi,uex,uexdx,uexdy);
     L2Error(v) = err2;
-    disp([ 'Computed error for theta=', num2str(param.theta) ])
+    disp([ 'Computed error for incident angle theta=', num2str(param.theta) ])
 
     v=v+1;
 end

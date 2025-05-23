@@ -1,7 +1,7 @@
 % DtN-TDG solver for Helmholtz equation on periodic grating
 % M-convergence error test
 
-close all; addpath quadtriangle\; addpath src\
+close all; addpath quadtriangle; addpath src
 
 %-----------------------------------
 %Parameters definition
@@ -46,7 +46,9 @@ for j=1:size(KK,2)
     param.K=KK(j);
     param.alp=param.K*cos(param.theta); %quasi-periodicity parameter
 
-    disp(['M-convergence test on the domain ', domain, ' with k=', num2str(param.K)])
+    disp(['M-convergence test on the domain ', domain, ' with k=', num2str(param.K), ...
+        ', p=', num2str(param.nd), ', h=', num2str(param.h),...
+        ', with ', num2str(param.nd.*size(mesh.t,1)), ' basis functions' ])
 
     %Refined solution for relative error
     param_raff=param;
@@ -73,7 +75,7 @@ for j=1:size(KK,2)
         %Error computation
         [err2,~] = SolErrRel(mesh,param,u,param_raff,u_raff,phi,grad_phi);
         L2Error(v,j) = err2;
-        disp([ 'Computed error for M=', num2str(param.M) ])
+        disp([ 'Computed error for k=', num2str(param.K) , ', M=', num2str(param.M), ' Fourier modes truncation' ])
 
         v=v+1;
     end

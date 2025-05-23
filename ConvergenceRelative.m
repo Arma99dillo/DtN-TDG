@@ -1,7 +1,7 @@
 % DtN-TDG solver for Helmholtz equation on periodic grating 
 % Relative error convergence test
 
-close all; addpath quadtriangle\; addpath src\
+close all; addpath quadtriangle; addpath src
 
 %-----------------------------------
 %Parameters definition
@@ -24,7 +24,8 @@ nd_raff=20; %number of directions for the refined solution
 domain = 'u_shape'; %select domain
 [mesh,param] = GenerateMesh(param,domain); %generate mesh 
 
-disp(['DtN-TDG convergence test on the domain ', domain, ' with k=', num2str(param.K)])
+disp(['DtN-TDG convergence test on the domain ', domain, ' with k=',...
+    num2str(param.K), ', h=', num2str(param.h)])
 
 if param.K.*param.L/2 > param.M
     warning('The value of M is too small, consider increasing for better stability')
@@ -33,7 +34,8 @@ end
 %-----------------------------------
 %Refined solution for relative error
 %-----------------------------------
-disp(['Started computing refined solution (p=', num2str(nd_raff), ')' ])
+disp(['Started computing refined solution (p=', num2str(nd_raff), '), ',...
+    num2str(param.nd.*size(mesh.t,1)), ' basis functions'])
 
 %basis functions and derivatives
 phi = @(x1,x2,d,k) exp(1i*k.*(x1.*d(1)+x2.*d(2)));
@@ -76,7 +78,8 @@ for nd=ni:nf %cycle on number of PW directions
     [err2,err1] = SolErrRel(mesh,param,u,param_raff,u_raff,phi,grad_phi);
     L2Error(v) = err2;
     H1Error(v) = err1;
-    disp([ 'Computed error for p=', num2str(param.nd) ])
+    disp([ 'Computed error for p=', num2str(param.nd), ...
+        ', with ', num2str(param.nd.*size(mesh.t,1)), ' basis functions' ])
 
     v=v+1;
 end

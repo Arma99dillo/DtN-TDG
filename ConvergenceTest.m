@@ -1,7 +1,7 @@
 % DtN-TDG solver for Helmholtz equation on periodic grating 
 % Convergence test
 
-close all; addpath quadtriangle\; addpath src\
+close all; addpath quadtriangle; addpath src
 
 %-----------------------------------
 %Parameters definition
@@ -25,7 +25,8 @@ domain = 'double_rectangle';
 %generate mesh and compute exact solution
 [mesh,param,uex,uexdx,uexdy] = GenerateMeshSol(param,domain);
 
-disp(['DtN-TDG convergence test on the domain ', domain, ' with k=', num2str(param.K)])
+disp(['DtN-TDG convergence test on the domain ', domain, ' with k=',...
+    num2str(param.K), ', h=', num2str(param.h)])
 
 if param.K.*param.L/2 > param.M
     warning('The value of M is too small, consider increasing for better stability')
@@ -57,8 +58,8 @@ for nd=ni:nf %cycle on number of PW directions
     [err2,err1] = SolErr(mesh,param,u,phi,grad_phi,uex,uexdx,uexdy);
     L2Error(v) = err2;
     H1Error(v) = err1;
-    disp([ 'Computed error for p=', num2str(param.nd) ])
-
+    disp([ 'Computed error for p=', num2str(param.nd), ...
+        ', with ', num2str(param.nd.*size(mesh.t,1)), ' basis functions' ])
 
     v=v+1;
 end
