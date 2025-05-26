@@ -1,4 +1,4 @@
-# DtN_TDG
+# DtN-TDG
 This repository implements the DtN-TDG method for scattering by periodic structures. This repository contains the scripts used to carry out the numerical tests of the method described in the paper
 
 _Trefftz Discontinuous Galerkin methods for scattering by periodic structures (2025)_, by Andrea Moiola and Armando Maria Monforte
