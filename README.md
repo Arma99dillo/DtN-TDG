@@ -4,7 +4,7 @@ This repository implements the DtN-TDG method for scattering by periodic structu
 _Trefftz Discontinuous Galerkin methods for scattering by periodic structures (2025)_, by Andrea Moiola and Armando Maria Monforte
 
 # Reproducibility Instructions
-This directory contains all the code necessary to reproduce the numerical results presented in the paper. All the codes have been tested on MATLAB R2024b release. The MATLAB pde toolbox is needed for the correct working of the code.
+This directory contains all the code necessary to reproduce the numerical results presented in the paper. All the codes have been tested on MATLAB R2024b release. The MATLAB Partial Differential Equation Toolbox™ is needed for the correct working of the code.
 
 # Contents and Structure
 
@@ -27,7 +27,7 @@ All the auxiliary files are int the `src` directory. If you want to add your own
 * The files `MeshEdges.m` and `MeshEdgesDir.m` identify the element edges in internal and boundary ones. Theya are compatible with any mesh configuration, as long as a marker for boundary vertices is provided;
 * The files `phi_int.m`, `phi_int_bound`, `DtNInt.m` and `DtNInt_m.m` compute all the boundary integrals without numerical quadrature.
 
-The `quadtriangle` directory implements the Duffy quadrature rule on triangular elements and is needed to compute numerical errors.
+The `quadtriangle` directory implements the Duffy quadrature rule on triangular elements and is needed to compute numerical errors, and is taken from https://www.mathworks.com/matlabcentral/fileexchange/72131-quadtriangle.
 
 Change the parameters and new configurations
 -
