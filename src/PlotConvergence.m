@@ -1,4 +1,4 @@
-function PlotConvergence(ni,nf,L2Error,H1Error)
+function PlotConvergence(ni,nf,L2Error,H1Error,ticks)
 
 set(groot, 'defaultAxesTickLabelInterpreter','latex');
 set(groot, 'defaultTextInterpreter','latex');
@@ -7,7 +7,7 @@ set(groot, 'defaultLegendInterpreter','latex');
 
 figure()
 semilogy(ni:nf,L2Error,'.-r',ni:nf,H1Error,'*--b'); grid
-xlim([ni nf])
+xlim([ni nf]); xticks(ticks);
 LL = legend('$L^2$ error','$H^1$ error','FontSize', 14);
 set(LL, 'Interpreter', 'latex');
 a = get(gca,'XTickLabel');  

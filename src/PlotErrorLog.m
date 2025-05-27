@@ -3,7 +3,6 @@ function PlotErrorLog(mesh,param,u,phi,uex)
 %and real part and absolute value of numerical error
 
 tic()
-disp('Started solution plot')
 
 t1=mesh.t; p1=mesh.p; nd=param.nd; d=param.d; 
 K=param.K; epsilon= param.epsilon; E=mesh.E;
@@ -80,7 +79,6 @@ axis equal;
 view(2)
 set(gca,'fontsize',12)
 
-disp('Ended solution plot')
 toc()
 
 end

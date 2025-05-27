@@ -2,7 +2,6 @@ function PlotErrRelLog(mesh,param,u,param_raff,u_raff,phi)
 %plots absolute value of the approximate solution and numerical error
 
 tic()
-disp('Started solution plot')
 
 t1=mesh.t; p1=mesh.p; nd=param.nd; d=param.d; 
 K=param.K; epsilon= param.epsilon; E=mesh.E;
@@ -71,7 +70,6 @@ axis equal; grid off; hold on
 view(2)
 set(gca,'fontsize',12)
 
-disp('Ended solution plot')
 toc()
 
 end
