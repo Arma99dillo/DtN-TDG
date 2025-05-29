@@ -24,8 +24,8 @@ Directories:
 All the auxiliary files are int the `src` directory.
 * All the domain configurations used in the paper are implemented in the `GenerateMesh.m` file, which generates the mesh and defines parameters such as the height, the periodicity length and the relative permittivity;
 * The `GenerateMeshSol.m` file implements the domain configuration and returns the analytical solution in the implemented cases; 
-* The files `MatrixDtNTDG.m` and `rhsDtNTDG.m` implement the linear system as described in Section 4.3, both with and withouth impenetrable obstacles inclusions;
-* The files `MeshEdges.m` and `MeshEdgesDir.m` identify the element edges in internal and boundary ones. Theya are compatible with any mesh configuration, as long as a marker for boundary vertices is provided;
+* The files `MatrixDtNTDG.m` and `rhsDtNTDG.m` implement the linear system as described in the paper, both with and withouth impenetrable obstacles inclusions;
+* The files `MeshEdges.m` and `MeshEdgesDir.m` identify the element edges in internal and boundary ones. They are compatible with any mesh configuration, as long as a marker for boundary vertices is provided;
 * The files `phi_int.m`, `phi_int_bound`, `DtNInt.m` and `DtNInt_m.m` compute all the boundary integrals without numerical quadrature.
 
 The `quadtriangle` directory implements the Duffy quadrature rule on triangular elements and is needed to compute numerical errors, and is taken from https://www.mathworks.com/matlabcentral/fileexchange/72131-quadtriangle.
