@@ -12,16 +12,16 @@ Experiment scripts:
 -
 The following files contain the main code to run all the experiments in Section 5 of the paper, allowing to reproduce the figures and tables therein:
 * The files `pConvTwoFlatNoabs.m`, `pConvTwoFlatAbs.m`, `pConvThreeFlatEps2.m`, `pConvThreeFlatEps10.m`, `pConvCornerSingularities.m`, `pConvMultipleMaterials.m`, `pConvImpenetrableObst.m` and `pConvImpenetrableObstVariableEps.m` are used to derive the _p_-convergence plots in all the numerical experiments of the paper;
-* The files `ThetaConvEps2e.m` and `ThetaConvEps10.m` generate the error plots in Figure 10;
-* The file `MConvCornerSingularities.m`  generates the error plots in Figure 12.
+* The files `ThetaConvEps2e.m` and `ThetaConvEps10.m` generate the theta-dependent error plots;
+* The file `MConvCornerSingularities.m`  generates the _M_-convergence plot.
 
 Other scripts:
 -
-* The file `SolveSingleProblem.m` is used to run the DtN-TDG method and solve and the scattering problem on a specified domain, plotting only the numerical solution, without convergence or error plots; 
+* The file `SolveSingleProblem.m` is used to run the DtN-TDG method and solve and the scattering problem on a specified domain, plotting only the numerical solution, without convergence or error plots.
 
 Directories:
 -
-All the auxiliary files are int the `src` directory. If you want to add your own files it's suggested to do it here.
+All the auxiliary files are int the `src` directory.
 * All the domain configurations used in the paper are implemented in the `GenerateMesh.m` file, which generates the mesh and defines parameters such as the height, the periodicity length and the relative permittivity;
 * The `GenerateMeshSol.m` file implements the domain configuration and returns the analytical solution in the implemented cases; 
 * The files `MatrixDtNTDG.m` and `rhsDtNTDG.m` implement the linear system as described in Section 4.3, both with and withouth impenetrable obstacles inclusions;
