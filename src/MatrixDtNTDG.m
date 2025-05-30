@@ -33,11 +33,11 @@ for T = 1:m
     for u=1:3
         if IsInt(T,u,B,t,p,S) %check if it's an internal edge
             %cycle on PW directions: this way I include all basis functions
+            p1=p(t(T,u),:)'; p2=p(t(T,u+1),:)'; %endpoints
+            n = (R*(p2-p1))/norm(p2-p1); %outward normal
             for l = 1:nd
                 for j= 1:nd
                     dl = d(:,l); dj = d(:,j); diff=dl-dj; %PW directions and difference
-                    p1=p(t(T,u),:)'; p2=p(t(T,u+1),:)'; %endpoints
-                    n = (R*(p2-p1))/norm(p2-p1); %outward normal
                     A_aux(j,l) = A_aux(j,l) + 1i*k.*(-(1/2).*(dot(dj,n)+dot(dl,n))-beta.*dot(dj,n).*dot(dl,n)-alpha).*phi_int(diff,p1,p2,k);
                 end
             end
