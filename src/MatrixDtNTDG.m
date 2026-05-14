@@ -1,4 +1,4 @@
-function A = MatrixDtNTDG(mesh,param)
+function [A,FCp,FCm] = MatrixDtNTDG(mesh,param)
 %define the system matrix for the DTN-TDG method
 
 %get the parameters
@@ -54,7 +54,7 @@ for L=1:size(LI,1)
     t2=LI(L,4); %second element T2
     p1=p(LI(L,1),:)'; p2=p(LI(L,2),:)'; %endpoints
     n = (R*(p2-p1))/norm(p2-p1); %outwad normal to T1
-    k1=K*sqrt(epsilon(E(t1))); k2=K*sqrt(epsilon(E(t2))); %wavenumbers inside T! and T2
+    k1=K*sqrt(epsilon(E(t1))); k2=K*sqrt(epsilon(E(t2))); %wavenumbers inside T1 and T2
     
     %first cycle: consider T1 for test and T2 for trial   
     A_aux =zeros(nd,nd); %auxiliary matrix
