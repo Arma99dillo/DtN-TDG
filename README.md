@@ -12,7 +12,7 @@ Experiment scripts:
 -
 The following files contain the main code to run all the experiments in Section 5 of the paper, allowing to reproduce the figures and tables therein:
 * The files `pConvTwoFlatNoabs.m`, `pConvTwoFlatAbs.m`, `pConvThreeFlatEps2.m`, `pConvThreeFlatEps10.m`, `pConvCornerSingularities.m`, `pConvMultipleMaterials.m`, `pConvImpenetrableObst.m` and `pConvImpenetrableObstVariableEps.m` are used to derive the _p_-convergence plots in all the numerical experiments of the paper;
-* The files `ThetaConvEps2e.m` and `ThetaConvEps10.m` generate the theta-dependent error plots;
+* The files `ThetaConvEps2.m` and `ThetaConvEps10.m` generate the theta-dependent error plots;
 * The file `MConvCornerSingularities.m`  generates the _M_-convergence plot.
 
 Other scripts:
